@@ -14,7 +14,7 @@ Libraries used:
 
 In the project directory, you can run:
 
-### 'npm install'
+### `npm install`
 
 Installs required packages.
 
