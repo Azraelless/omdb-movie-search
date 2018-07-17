@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import isEmpty from 'lodash/isEmpty'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -68,15 +69,11 @@ const styles = theme => ({
 class Movie extends Component {
 
   render() {
-    const { data, classes } = this.props
-    let movie
-    if (data) {
-      movie = Object.values(data)[0]
-    }
+    const { movie, classes } = this.props
 
     return (
       <div>
-        {data && 
+        {!isEmpty(movie) && 
           <Card className={classes.card}>
             <CardMedia image={movie.poster} className={classes.poster} /> 
             <CardContent className={classes.content}>

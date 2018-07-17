@@ -1,4 +1,4 @@
-import { CALL_API, Schemas } from '../middleware/api'
+import { CALL_API } from '../middleware/api'
 
 export const MOVIE_REQUEST = 'MOVIE_REQUEST'
 export const MOVIE_SUCCESS = 'MOVIE_SUCCESS'
@@ -9,7 +9,6 @@ const fetchMovie = (title, year) => ({
     types: [ MOVIE_REQUEST, MOVIE_SUCCESS, MOVIE_FAILURE ],
     title: title,
     year: year,
-    schema: Schemas.MOVIE
   }
 })
 

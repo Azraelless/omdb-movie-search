@@ -2,9 +2,9 @@ import merge from 'lodash/merge'
 import { combineReducers } from 'redux'
 import { RESET } from '../actions';
 
-const entities = (state = {} , action) => {
-  if (action.response && action.response.entities) {
-    return merge({}, state, action.response.entities)
+const movie = (state = {} , action) => {
+  if (action.response) {
+    return merge({}, state, action.response)
   }
   if (action.type === RESET)
     return {}
@@ -26,7 +26,7 @@ const errorMessage = (state = null, action) => {
 }
 
 const rootReducer = combineReducers({
-  entities,
+  movie,
   errorMessage
 })
 

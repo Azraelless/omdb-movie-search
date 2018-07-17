@@ -24,14 +24,14 @@ class App extends Component {
         <Explore title={title} year={year} />
         <br />
         <Typography variant="title">{errorMessage}</Typography>
-        <Movie data={movie}/>
+        <Movie movie={movie}/>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  movie: state.entities.movie,
+  movie: state.movie,
   errorMessage: state.errorMessage
 })
 

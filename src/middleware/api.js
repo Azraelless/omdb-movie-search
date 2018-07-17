@@ -1,4 +1,3 @@
-import { normalize, schema } from 'normalizr'
 import { camelizeKeys } from 'humps'
 
 const createURL = (title, year) => {
@@ -6,7 +5,7 @@ const createURL = (title, year) => {
   return "http://www.omdbapi.com/?apikey=27d1b7e3&t=" + title + yearParam
 }
 
-const callApi = (title, year, schema) => {
+const callApi = (title, year) => {
   let URL = createURL(title, year)
 
   return fetch(URL)
@@ -17,28 +16,9 @@ const callApi = (title, year, schema) => {
         }
 
         const camelizedJson = camelizeKeys(json)
-        console.log(normalize(camelizedJson, schema))
-        return Object.assign({},
-          normalize(camelizedJson, schema)
-        )
+        return Object.assign({}, camelizedJson)
       })
     )
-}
-
-// We use this Normalizr schemas to transform API responses from a nested form
-// to a flat form where movie is placed in `entities`, and nested
-// JSON objects are replaced with their IDs. This is very convenient for
-// consumption by reducers, because we can easily build a normalized tree
-// and keep it updated as we fetch more data.
-// Read more about Normalizr: https://github.com/paularmstrong/normalizr
-
-const movieSchema = new schema.Entity('movie', {}, {
-  idAttribute: movie => movie.imdbID.toLowerCase()
-})
-
-// Schemas for responses.
-export const Schemas = {
-  MOVIE: movieSchema,
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -52,15 +32,10 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { title, year } = callAPI
-  const { schema, types } = callAPI
-
+  const { types, title, year } = callAPI
 
   if (typeof title !== 'string') {
     throw new Error('Specify a title.')
-  }
-  if (!schema) {
-    throw new Error('Specify one of the exported Schemas.')
   }
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')
@@ -78,7 +53,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(title, year, schema).then(
+  return callApi(title, year).then(
     response => next(actionWith({
       response,
       type: successType

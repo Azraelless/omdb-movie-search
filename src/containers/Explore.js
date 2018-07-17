@@ -48,7 +48,6 @@ class Explore extends Component {
     if (nextProps.match.params.title !== this.props.match.params.title || 
         nextProps.match.params.year !== this.props.match.params.year) {
       const { title, year } = nextProps.match.params
-      console.log(title, year)
       const { loadMovie, reset } = nextProps
       this.setState({
         title: title,
@@ -68,7 +67,6 @@ class Explore extends Component {
     let state = this.state
     state[name] = value
     this.setState(state);
-    console.log(state)
   }
 
   handleKeyUp = (e) => {
@@ -87,7 +85,6 @@ class Explore extends Component {
   handleSubmitClick = () => {
     const { reset } = this.props
     const { title, year } = this.state
-    console.log(this.state)
 
     if (title) {
       if (year)
